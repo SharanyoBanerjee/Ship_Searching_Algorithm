@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probabilistic Battleship Simulator</title>
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-layout">
+        <header class="app-header">
+            <div class="logo">
+                <h1>Ship Finding Algorithm</h1>
+            </div>
+            <div class="mode-toggles">
+                <button id="btnPlayerMode" class="mode-btn active">PLAYER SEARCH</button>
+                <button id="btnAIMode" class="mode-btn">COMPUTER SEARCH</button>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <div class="grid-container">
+                <div class="user-guide-banner" id="userGuide">
+                    Loading Engine...
+                </div>
+                <section class="grid-view">
+                    <div class="zoom-controls">
+                        <button id="btnZoomOut" title="Zoom Out">−</button>
+                        <span id="zoomLevelText">100%</span>
+                        <button id="btnZoomIn" title="Zoom In">+</button>
+                    </div>
+                    <div class="canvas-container">
+                        <div class="canvas-wrapper" id="canvasWrapper">
+                            <canvas id="gameCanvas"></canvas>
+                        </div>
+
+                        <div id="gameStateOverlay" class="game-overlay hidden">
+                            <h2 id="overlayTitle">SHIP FOUND</h2>
+                            <p id="overlaySubtitle">Moves: 12 | Time: 4.2s</p>
+                            <button id="btnPlayAgain" class="action-btn">New Simulation</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="dashboard-sidebar">
+                <div class="dashboard-card setup-card">
+                    <h3 class="card-title">PARAMETERS</h3>
+                    <div class="form-group row">
+                        <div class="input-col">
+                            <label>Grid X</label>
+                            <input type="number" id="gridSizeX" value="10" min="1" max="64">
+                        </div>
+                        <div class="col-divider">×</div>
+                        <div class="input-col">
+                            <label>Grid Y</label>
+                            <input type="number" id="gridSizeY" value="10" min="1" max="64">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ship Size</label>
+                        <input type="number" id="shipSize" value="5" min="1" max="8">
+                        <div class="help-text">Cells occupied on grid.</div>
+                    </div>
+                    <button id="btnInitialize" class="action-btn primary-btn">Initialize Engine</button>
+                </div>
+
+                <div class="dashboard-card stats-card">
+                    <h3 class="card-title">PROBABILITY ENGINE</h3>
+                    <div class="stat-list">
+                        <div class="stat-item">
+                            <span class="stat-label">Total Valid States</span>
+                            <span class="stat-value font-mono" id="statTotalPlacements">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Remaining States</span>
+                            <span class="stat-value font-mono highlight-blue" id="statRemainingPlacements">0</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-label">Best Next Move</span>
+                            <span class="stat-value font-mono highlight-green" id="statBestMove">X:0 Y:0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Maximum P(cell)</span>
+                            <span class="stat-value font-mono" id="statMaxProb">0.00%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card status-card">
+                    <h3 class="card-title">METRICS</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-box">
+                            <span class="metric-value font-mono" id="metricMoves">0</span>
+                            <span class="metric-label">MOVES</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-value font-mono" id="metricTime">0.0s</span>
+                            <span class="metric-label">TIME</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-value font-mono" id="metricDiscovered">0/5</span>
+                            <span class="metric-label">DISCOVERED</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-value font-mono" id="metricEfficiency">100%</span>
+                            <span class="metric-label">EFFICIENCY</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card ai-card hidden" id="aiControlsSection">
+                    <h3 class="card-title">AI OPTIMIZER</h3>
+                    <div class="playback-controls">
+                        <button id="btnAIPlay" class="playback-btn" title="Play">▶</button>
+                        <button id="btnAIPause" class="playback-btn" title="Pause">⏸</button>
+                        <button id="btnAIStep" class="playback-btn" title="Step Forward">⏭</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Execution Speed</label>
+                        <input type="range" id="aiSpeedSlider" min="1" max="1000" value="500" dir="rtl">
+                    </div>
+                    <div class="strategy-indicators">
+                        <div class="strategy-tag">Checkerboard Filter</div>
+                        <div class="strategy-tag">Bayesian Update</div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="app-timeline">
+            <h3 class="timeline-title">DECISION LOG</h3>
+            <div class="timeline-scroll-area" id="timelineContainer">
+                <div class="timeline-item start-node">System Initialized</div>
+            </div>
+        </footer>
+    </div>
+    <script src="app.js?v=4"></script>
+</body>
+
+</html>
