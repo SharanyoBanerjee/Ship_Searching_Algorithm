@@ -1,5 +1,7 @@
-# Ship Searching Algorithm
-## The Ship Searching Algorithm Project is designed to find a missing ship in a vast ocean using probability theory and Bayesian reasoning.
+# Ship Searching Algorithm ([Deployed Link](https://shipsearchalgo.netlify.app/))
+## The Ship Searching Algorithm Project is designed to find a missing ship in a vast ocean using probability theory and Bayesian reasoning. 
+
+
 
 ## Unlike simple searching simulators , this project uses :
 - Any random possible ship placement and grid dimensions.
